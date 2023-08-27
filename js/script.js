@@ -1,5 +1,24 @@
 const postsContainer = document.getElementById('posts');
 const usersContainer = document.getElementById('users');
+const searchBtn = document.getElementById('searchBtn');
+const idInput = document.getElementById('idInput');
+
+
+
+searchBtn.addEventListener('click', function() {
+  fetch('https://jsonplaceholder.typicode.com/posts?userId=1')
+  .then(response => response.json())
+
+  // if (idInput === ${post.userId}) {
+
+  // }
+
+  setTimeout(() => {
+    postsContainer.innerHTML = "";
+  }, 1000)
+})
+
+
 
 function loadPosts() {
   return fetch('https://jsonplaceholder.typicode.com/posts').then(response => 
@@ -68,8 +87,10 @@ Promise.all([
       //вбиваем всё в div-ки с ID из HTML file. 
       postsContainer.appendChild(postContainer);
       usersContainer.appendChild(userContainer);
+
     })
   }
 })
+
 
 
