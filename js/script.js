@@ -4,14 +4,14 @@ const searchBtn = document.getElementById('searchBtn');
 const idInput = document.getElementById('idInput');
 
 
+searchBtn.addEventListener('click', function() {
+  let idInputNumber = Number(idInput.value);
+  console.log(idInputNumber);
+})
 
 searchBtn.addEventListener('click', function() {
   fetch('https://jsonplaceholder.typicode.com/posts?userId=1')
   .then(response => response.json())
-
-  // if (idInput === ${post.userId}) {
-
-  // }
 
   setTimeout(() => {
     postsContainer.innerHTML = "";
@@ -39,56 +39,48 @@ Promise.all([
   
 
   for (let post of posts) { 
-    users.forEach(user => {
+    const postContainer = document.createElement('div');
 
-      //Создаём две Div-ки 
-      const postContainer = document.createElement('div');
-      const userContainer = document.createElement('div');
+    const title = document.createElement('h3');
+    title.innerText = "Title: " + post.title;
 
-
-      //Контекст внутри первой div-ки
-      const title = document.createElement('h3');
-      title.innerText = post.title;
-
-      const body = document.createElement('p');
-      body.innerText = post.body;
-
-      const userId = document.createElement('p');
-      // userId.innerText = `Author id: #${post.userId}`;
+    const body = document.createElement('p');
+    body.innerText = post.body;
 
 
-      //Контекст внутри второй div-ки. 
-      const userName = document.createElement('p');
-      userName.innerText = `Name: ${user.name}`;
+    const userData = users.find(user => user.id === post.userId);
+    
+    let emailAddress;
+    if (userData) {
+      emailAddress = document.createElement("p");
+      emailAddress.innerText = `Nickname: ${userData.email}`;
+    }
 
-      const userEmail = document.createElement('p');
-      userEmail.innerText = `Email: ${user.email}`;
+    let userName;
+    userName = document.createElement("p");
+    userName.innerText = `Author: ${userData.name}`;
 
-      const userCity = document.createElement('p');
-      userCity.innerText = `City: ${user.address.city}.`;
-      
-  
+    const postId = document.createElement('p');
+    postId.innerText = "Post #" + post.id;
 
-      //пОстаем в определенной последовательности контекст из двух div-ок
-      postContainer.appendChild(title);
-      postContainer.appendChild(body);
-      postContainer.appendChild(userId);
-      postContainer.appendChild(userName);
-      postContainer.appendChild(userEmail);
-      postContainer.appendChild(userCity);
+    const phoneNumber = document.createElement('p');
+    phoneNumber.innerText = `Phone# ${userData.phone}`; 
 
-      //????Почему мы можем только использовать postContainer.appendChild(userName),(userEmail),etc.
-      //????Почему не можем использовать userContainer? не отображает на странице данные если написать код вот так
-      // userContainer.appendChild(userName);
-      // userContainer.appendChild(userEmail);
-      // userContainer.appendChild(userCity); 
+    const line = document.createElement('p');
+    line.innerText = "____________________________________";
 
-      
-      //вбиваем всё в div-ки с ID из HTML file. 
-      postsContainer.appendChild(postContainer);
-      usersContainer.appendChild(userContainer);
 
-    })
+    postContainer.appendChild(postId);
+    postContainer.appendChild(userName);
+    postContainer.appendChild(title);
+    postContainer.appendChild(body);
+    postContainer.appendChild(emailAddress);
+    postContainer.appendChild(phoneNumber);
+    postContainer.appendChild(line);
+    
+ 
+    postsContainer.appendChild(postContainer);
+
   }
 })
 
